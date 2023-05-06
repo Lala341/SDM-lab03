@@ -8,7 +8,7 @@ import org.apache.jena.rdf.model.ModelFactory;
 
 
 public class TBOX {
-    public static final String BASE = "http://www.sdm.upc.edu/#";
+    public static final String BASE = "http://www.sdm.lab#";
 
     public static void createTBOX(){
 
@@ -24,7 +24,14 @@ public class TBOX {
         person.addSubClass( chair );
         person.addSubClass( editor );
         person.addSubClass( reviewer );
-        
+        OntClass area = model.createClass(BASE.concat("Area") );
+        OntClass conference = model.createClass(BASE.concat("Conference") );
+        OntClass journal = model.createClass(BASE.concat("Journal") );
+        OntClass publication = model.createClass(BASE.concat("Publication") );
+        OntClass decision = model.createClass(BASE.concat("Decision") );
+        OntClass review = model.createClass(BASE.concat("Review") );
+        OntClass reviewText = model.createClass(BASE.concat("ReviewText") );
+
         OntClass paper = model.createClass( BASE.concat("Paper") );
         OntClass fullPaper = model.createClass( BASE.concat("Full_Paper") );
         OntClass shortPaper = model.createClass( BASE.concat("Short_Paper") );
@@ -37,8 +44,51 @@ public class TBOX {
         paper.addSubClass( posterPaper );
 
 
-        
-        
+
+        OntProperty hasArea = model.createOntProperty(BASE.concat("hasarea"));
+        hasArea.addDomain(paper);
+        hasArea.addRange(area);
+        hasArea.addLabel("hasArea", "en");
+
+        OntProperty hasAuthor = model.createOntProperty(BASE.concat("hasauthor"));
+        hasAuthor.addDomain(paper);
+        hasAuthor.addRange(author);
+        hasAuthor.addLabel("hasAuthor", "en");
+
+        OntProperty hasChair = model.createOntProperty(BASE.concat("haschair"));
+        hasChair.addDomain(conference);
+        hasChair.addRange(chair);
+        hasChair.addLabel("hasChair", "en");
+
+        OntProperty hasDecision = model.createOntProperty(BASE.concat("hasdecision"));
+        hasDecision.addDomain(review);
+        hasDecision.addRange(decision);
+        hasDecision.addLabel("hasDecision", "en");
+
+        OntProperty hasEditor = model.createOntProperty(BASE.concat("haseditor"));
+        hasEditor.addDomain(journal);
+        hasEditor.addRange(editor);
+        hasEditor.addLabel("hasEditor", "en");
+
+        OntProperty hasPaper = model.createOntProperty(BASE.concat("haspaper"));
+        hasPaper.addDomain(publication);
+        hasPaper.addRange(paper);
+        hasPaper.addLabel("hasPaper", "en");
+
+        OntProperty hasReview = model.createOntProperty(BASE.concat("hasreview"));
+        hasReview.addDomain(paper);
+        hasReview.addRange(review);
+        hasReview.addLabel("hasReview", "en");
+
+        OntProperty hasReviewer = model.createOntProperty(BASE.concat("hasreviewer"));
+        hasReviewer.addDomain(review);
+        hasReviewer.addRange(reviewer);
+        hasReviewer.addLabel("hasReviewer", "en");
+
+        OntProperty hasReviewText = model.createOntProperty("http://www.sdm.lab#hasreviewtext");
+        hasReviewText.addDomain(review);
+        hasReviewText.addRange(reviewText);
+        hasReviewText.addLabel("hasReviewText", "en");
 
 
     }
