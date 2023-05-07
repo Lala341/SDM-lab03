@@ -90,8 +90,5 @@ public class TBOX {
         hasReviewText.addRange(reviewText);
         hasReviewText.addLabel("hasReviewText", "en");
 
-
     }
-
-
 }

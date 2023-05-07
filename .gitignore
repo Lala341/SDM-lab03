@@ -1,2 +1,4 @@
 generationData/basicCSV/dblp.xml
 generationData/basicCSV/output*
+*.csv
+*.nt
