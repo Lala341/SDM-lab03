@@ -20,7 +20,7 @@ public class TBOX {
         OntClass editor = model.createClass(BASE.concat("Editor") );
         OntClass reviewer = model.createClass( BASE.concat("Reviewer") );
 
-        person.addSubClass( author );
+        person.get.addSubClass( author );
         person.addSubClass( chair );
         person.addSubClass( editor );
         person.addSubClass( reviewer );
