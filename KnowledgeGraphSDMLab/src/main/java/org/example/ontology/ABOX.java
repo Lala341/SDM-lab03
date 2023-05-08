@@ -23,7 +23,7 @@ public class ABOX {
         OntClass paper = ontModel.getOntClass(TBOX.BASE.concat("Paper"));
         OntClass author = ontModel.getOntClass(TBOX.BASE.concat("Author"));
 
-        //OntProperty hasAuthor = ontModel.getOntProperty(TBOX.BASE.concat("hasAuthor"));
+        OntProperty hasAuthor = ontModel.getOntProperty(TBOX.BASE.concat("hasauthor"));
 
         BufferedReader csvReader = new BufferedReader(new FileReader(CSV_DATA_ARTICLE));
         CSVParser csvParser = CSVFormat.DEFAULT.withDelimiter(';').withHeader().parse(csvReader);
@@ -34,7 +34,7 @@ public class ABOX {
             Individual individualPaper = paper.createIndividual(CSV_DATA_ARTICLE.concat(paperName));
             String authorName = csvRecord.get("author");
             Individual individualAuthor = author.createIndividual(CSV_DATA_ARTICLE.concat(authorName));
-            //individualAuthor.addProperty(hasAuthor, individualPaper);
+            individualAuthor.addProperty(hasAuthor, individualPaper);
 
         }
 
