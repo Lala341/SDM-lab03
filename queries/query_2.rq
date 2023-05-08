@@ -1,0 +1,15 @@
+# Find all properties whose domain is Author.
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sdm: <http://www.bdma.upc/#>
+
+SELECT DISTINCT ?properties WHERE {
+    {
+	    ?properties rdfs:domain sdm:Author        
+    }
+    UNION
+    {
+        sdm:Author rdfs:subClassOf* ?super_class . # all the superclasses of author
+        ?properties rdfs:domain ?super_class # domain of all those superclasses
+    }
+}

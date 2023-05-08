@@ -1,0 +1,37 @@
+Prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+Prefix owl: <http://www.w3.org/2002/07/owl#>
+Prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+#Prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+Prefix sdm: <http://www.bdma.upc/#>
+
+select ?s where {
+    ?s rdf:type sdm:Author
+} limit 50
+
+#select ?Authors where { 
+#	?Authors rdf:type sdm:Author .
+#} limit 100 
+#
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sdm: <http://www.bdma.upc/#>
+
+SELECT ?domain ?p ?range WHERE {
+    ?p rdfs:domain ?domain .
+    ?p rdfs:range ?range
+}
+
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sdm: <http://www.bdma.upc/#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+#SELECT ?author ?paper ?venue WHERE {
+#    ?author sdm:submit ?paper .
+##    ?paper sdm:submitted_to ?venue
+#} limit 10
+
+SELECT ?author WHERE {
+    ?author rdfs:domain sdm:Paper .
+}
+

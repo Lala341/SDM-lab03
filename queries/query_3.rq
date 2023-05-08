@@ -1,0 +1,15 @@
+# Find all properties whose domain is either Conference or Journal.
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sdm: <http://www.bdma.upc/#>
+
+SELECT DISTINCT ?properties WHERE {
+    {
+	    ?properties rdfs:domain sdm:Venue
+    }
+    UNION
+    {
+        ?child_class rdfs:subClassOf* sdm:Venue . # all the child classes of venue
+        ?properties rdfs:domain ?child_class # domain of all those child classes
+    }
+}
