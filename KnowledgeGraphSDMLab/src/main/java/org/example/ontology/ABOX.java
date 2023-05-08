@@ -24,6 +24,7 @@ public class ABOX {
 
         OntClass paper = ontModel.getOntClass(TBOX.BASE.concat("Paper"));
         OntClass author = ontModel.getOntClass(TBOX.BASE.concat("Author"));
+        OntClass journal = ontModel.getOntClass(TBOX.BASE.concat("Journal"));
 
         OntProperty hasAuthor = ontModel.getOntProperty(TBOX.BASE.concat("hasauthor"));
 
@@ -34,8 +35,11 @@ public class ABOX {
 
             String paperName = csvRecord.get("title");
             Individual individualPaper = paper.createIndividual(BASE.concat(paperName));
-            String authorName = csvRecord.get("author");
 
+            String journalName = csvRecord.get("journal");
+            Individual individualJournal = journal.createIndividual(BASE.concat(journalName));
+
+            String authorName = csvRecord.get("author");
             String[] authorList = authorName.split("\\|", -1);
 
             for (int i = 0; i < authorList.length; i++) {
