@@ -15,6 +15,8 @@ public class ABOX {
     public static final String ABOX_DATA = "data/abox.nt";
     public static final String CSV_DATA_ARTICLE = "data/csv/output_article.csv";
 
+    public static final String BASE = "http://www.sdm.lab#";
+
     public static void createABOX() throws IOException {
 
         Model model = ModelFactory.createDefaultModel().read(TBOX_DATA);
@@ -31,11 +33,15 @@ public class ABOX {
         for(CSVRecord csvRecord : csvParser) {
 
             String paperName = csvRecord.get("title");
-            Individual individualPaper = paper.createIndividual(CSV_DATA_ARTICLE.concat(paperName));
+            Individual individualPaper = paper.createIndividual(BASE.concat(paperName));
             String authorName = csvRecord.get("author");
-            Individual individualAuthor = author.createIndividual(CSV_DATA_ARTICLE.concat(authorName));
-            individualAuthor.addProperty(hasAuthor, individualPaper);
 
+            String[] authorList = authorName.split("\\|", -1);
+
+            for (int i = 0; i < authorList.length; i++) {
+                Individual individualAuthor = author.createIndividual(BASE.concat(authorList[i]));
+                individualPaper.addProperty(hasAuthor, individualAuthor);
+            }
         }
 
         FileOutputStream writerStream = new FileOutputStream(ABOX_DATA);
