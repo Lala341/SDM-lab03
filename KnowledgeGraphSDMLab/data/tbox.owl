@@ -1,0 +1,85 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+  <rdfs:Class rdf:about="http://www.sdm.lab#Person"/>
+  <rdfs:Class rdf:about="http://www.sdm.lab#Area"/>
+  <rdfs:Class rdf:about="http://www.sdm.lab#Editor">
+    <rdfs:subClassOf rdf:resource="http://www.sdm.lab#Person"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.sdm.lab#Publication"/>
+  <rdfs:Class rdf:about="http://www.sdm.lab#Journal"/>
+  <rdfs:Class rdf:about="http://www.sdm.lab#Short_Paper">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="http://www.sdm.lab#Paper"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.sdm.lab#Poster_Paper">
+    <rdfs:subClassOf rdf:resource="http://www.sdm.lab#Paper"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.sdm.lab#ReviewText"/>
+  <rdfs:Class rdf:about="http://www.sdm.lab#Review"/>
+  <rdfs:Class rdf:about="http://www.sdm.lab#Conference"/>
+  <rdfs:Class rdf:about="http://www.sdm.lab#Demo_Paper">
+    <rdfs:subClassOf rdf:resource="http://www.sdm.lab#Paper"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.sdm.lab#Decision"/>
+  <rdfs:Class rdf:about="http://www.sdm.lab#Full_Paper">
+    <rdfs:subClassOf rdf:resource="http://www.sdm.lab#Paper"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.sdm.lab#Chair">
+    <rdfs:subClassOf rdf:resource="http://www.sdm.lab#Person"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.sdm.lab#Author">
+    <rdfs:subClassOf rdf:resource="http://www.sdm.lab#Person"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.sdm.lab#Reviewer">
+    <rdfs:subClassOf rdf:resource="http://www.sdm.lab#Person"/>
+  </rdfs:Class>
+  <rdf:Property rdf:about="http://www.sdm.lab#haseditor">
+    <rdfs:label xml:lang="en">hasEditor</rdfs:label>
+    <rdfs:range rdf:resource="http://www.sdm.lab#Editor"/>
+    <rdfs:domain rdf:resource="http://www.sdm.lab#Journal"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.sdm.lab#hasauthor">
+    <rdfs:label xml:lang="en">hasAuthor</rdfs:label>
+    <rdfs:range rdf:resource="http://www.sdm.lab#Author"/>
+    <rdfs:domain rdf:resource="http://www.sdm.lab#Paper"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.sdm.lab#hasreviewtext">
+    <rdfs:label xml:lang="en">hasReviewText</rdfs:label>
+    <rdfs:range rdf:resource="http://www.sdm.lab#ReviewText"/>
+    <rdfs:domain rdf:resource="http://www.sdm.lab#Review"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.sdm.lab#haschair">
+    <rdfs:label xml:lang="en">hasChair</rdfs:label>
+    <rdfs:range rdf:resource="http://www.sdm.lab#Chair"/>
+    <rdfs:domain rdf:resource="http://www.sdm.lab#Conference"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.sdm.lab#haspaper">
+    <rdfs:label xml:lang="en">hasPaper</rdfs:label>
+    <rdfs:range rdf:resource="http://www.sdm.lab#Paper"/>
+    <rdfs:domain rdf:resource="http://www.sdm.lab#Publication"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.sdm.lab#hasdecision">
+    <rdfs:label xml:lang="en">hasDecision</rdfs:label>
+    <rdfs:range rdf:resource="http://www.sdm.lab#Decision"/>
+    <rdfs:domain rdf:resource="http://www.sdm.lab#Review"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.sdm.lab#hasreviewer">
+    <rdfs:label xml:lang="en">hasReviewer</rdfs:label>
+    <rdfs:range rdf:resource="http://www.sdm.lab#Reviewer"/>
+    <rdfs:domain rdf:resource="http://www.sdm.lab#Review"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.sdm.lab#hasreview">
+    <rdfs:label xml:lang="en">hasReview</rdfs:label>
+    <rdfs:range rdf:resource="http://www.sdm.lab#Review"/>
+    <rdfs:domain rdf:resource="http://www.sdm.lab#Paper"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.sdm.lab#hasarea">
+    <rdfs:label xml:lang="en">hasArea</rdfs:label>
+    <rdfs:range rdf:resource="http://www.sdm.lab#Area"/>
+    <rdfs:domain rdf:resource="http://www.sdm.lab#Paper"/>
+  </rdf:Property>
+</rdf:RDF>

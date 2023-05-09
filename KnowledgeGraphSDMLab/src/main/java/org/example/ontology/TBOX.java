@@ -5,12 +5,16 @@ import org.apache.jena.ontology.OntProperty;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.ModelFactory;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 public class TBOX {
     public static final String BASE = "http://www.sdm.lab#";
+    public static final String TBOX_DATA = "data/tbox.owl";
 
-    public static void createTBOX(){
+    public static void createTBOX() throws IOException {
 
         OntModel model = ModelFactory.createOntologyModel(OntModelSpec.RDFS_MEM_RDFS_INF);
        
@@ -20,10 +24,10 @@ public class TBOX {
         OntClass editor = model.createClass(BASE.concat("Editor") );
         OntClass reviewer = model.createClass( BASE.concat("Reviewer") );
 
-        person.get.addSubClass( author );
-        person.addSubClass( chair );
-        person.addSubClass( editor );
-        person.addSubClass( reviewer );
+        person.addSubClass(author);
+        person.addSubClass(chair);
+        person.addSubClass(editor);
+        person.addSubClass(reviewer);
         OntClass area = model.createClass(BASE.concat("Area") );
         OntClass conference = model.createClass(BASE.concat("Conference") );
         OntClass journal = model.createClass(BASE.concat("Journal") );
@@ -38,12 +42,10 @@ public class TBOX {
         OntClass demoPaper = model.createClass( BASE.concat("Demo_Paper") );
         OntClass posterPaper = model.createClass( BASE.concat("Poster_Paper") );
 
-        paper.addSubClass( fullPaper );
-        paper.addSubClass( shortPaper );
-        paper.addSubClass( demoPaper );
-        paper.addSubClass( posterPaper );
-
-
+        paper.addSubClass(fullPaper);
+        paper.addSubClass(shortPaper);
+        paper.addSubClass(demoPaper);
+        paper.addSubClass(posterPaper);
 
         OntProperty hasArea = model.createOntProperty(BASE.concat("hasarea"));
         hasArea.addDomain(paper);
@@ -90,8 +92,8 @@ public class TBOX {
         hasReviewText.addRange(reviewText);
         hasReviewText.addLabel("hasReviewText", "en");
 
-
+        FileOutputStream writerStream = new FileOutputStream(TBOX_DATA);
+        model.write(writerStream, "RDF/XML");
+        writerStream.close();
     }
-
-
 }
