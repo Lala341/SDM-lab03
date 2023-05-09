@@ -28,6 +28,7 @@ public class TBOX {
         person.addSubClass(chair);
         person.addSubClass(editor);
         person.addSubClass(reviewer);
+
         OntClass area = model.createClass(BASE.concat("Area") );
         OntClass conference = model.createClass(BASE.concat("Conference") );
         OntClass journal = model.createClass(BASE.concat("Journal") );
