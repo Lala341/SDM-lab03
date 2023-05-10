@@ -6,17 +6,17 @@ import org.apache.commons.csv.CSVRecord;
 import org.apache.jena.ontology.*;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Property;
 
 import java.io.*;
+import java.net.URLEncoder;
 import java.util.Iterator;
 
 public class ABOX {
 
     public static final String TBOX_DATA = "data/tbox.owl";
     public static final String ABOX_DATA = "data/abox.nt";
-    public static final String CSV_DATA_ARTICLE = "data/csv/articles.csv";
-
-    public static final String CSV_DATA_REVIEW = "data/csv/reviews.csv";
+    public static final String CSV_DATA_ARTICLE = "data/csv/merged_file.csv";
 
     public static final String BASE = "http://www.sdm.lab#";
 
@@ -27,7 +27,7 @@ public class ABOX {
 
         OntClass paper = ontModel.getOntClass(BASE.concat("Paper"));
         OntClass fullPaper = ontModel.getOntClass(BASE.concat("FullPaper"));
-        OntClass shortPaper = ontModel.createClass(BASE.concat("ShortPaper"));
+        OntClass shortPaper = ontModel.getOntClass(BASE.concat("ShortPaper"));
         OntClass demoPaper = ontModel.getOntClass(BASE.concat("DemoPaper"));
         OntClass poster = ontModel.getOntClass(BASE.concat("Poster"));
 
@@ -40,6 +40,14 @@ public class ABOX {
         OntClass venue = ontModel.getOntClass(BASE.concat("Venue"));
         OntClass journal = ontModel.getOntClass(BASE.concat("Journal"));
         OntClass conference = ontModel.getOntClass(BASE.concat("Conference"));
+        OntClass workshop = ontModel.getOntClass(BASE.concat("Workshop"));
+        OntClass symposium = ontModel.getOntClass(BASE.concat("Symposium"));
+        OntClass expertGroup = ontModel.getOntClass(BASE.concat("ExpertGroup"));
+        OntClass regularConference = ontModel.getOntClass(BASE.concat("RegularConference"));
+
+        OntClass review = ontModel.getOntClass(BASE.concat("Review"));
+        OntClass publication = ontModel.getOntClass(BASE.concat("Publication"));
+        OntClass year = ontModel.getOntClass(BASE.concat("Year"));
 
         OntProperty hasAuthor = ontModel.getOntProperty(BASE.concat("hasauthor"));
         OntProperty hasReviewer = ontModel.getOntProperty(BASE.concat("hasreviewer"));
@@ -52,16 +60,14 @@ public class ABOX {
         OntProperty hasResearchArea = ontModel.getOntProperty(BASE.concat("hasresearcharea"));
         OntProperty hasYear = ontModel.getOntProperty(BASE.concat("hasyear"));
 
-
         BufferedReader csvReader = new BufferedReader(new FileReader(CSV_DATA_ARTICLE));
         CSVParser csvParser = CSVFormat.DEFAULT.withDelimiter(',').withHeader().parse(csvReader);
 
         for(CSVRecord csvRecord : csvParser) {
 
-            //creating a paper
-
+            //creating papers
             String paperID = csvRecord.get("DOI");
-            String paperName = csvRecord.get("title");
+            String paperName = csvRecord.get("title_x");
             String paperAbstract = csvRecord.get("abstract");
             String paperType = csvRecord.get("edition_venue");
 
@@ -82,24 +88,56 @@ public class ABOX {
 
             Individual individualPaper = paperClass.createIndividual(BASE.concat(paperID));
 
-            String authorName = csvRecord.get("author");
+            //creating authors
+            String authorName = csvRecord.get("author_x");
             String[] authorList = authorName.split("\\|", -1);
 
             for (int i = 0; i < authorList.length; i++) {
-                Individual individualAuthor = author.createIndividual(BASE.concat(authorList[i]));
+                Individual individualAuthor = author.createIndividual(BASE.concat(URLEncoder.encode(authorList[i])));
                 individualPaper.addProperty(hasAuthor, individualAuthor);
             }
-        }
 
-        BufferedReader csvReviewsReader = new BufferedReader(new FileReader(CSV_DATA_REVIEW));
-        CSVParser csvReviewParser = CSVFormat.DEFAULT.withDelimiter(',').withHeader().parse(csvReviewsReader);
+            //creating reviews
+            String reviewID = csvRecord.get("reviewID");
+            Individual individualReview = review.createIndividual(BASE.concat(reviewID));
+            individualPaper.addProperty(hasReview, individualReview);
 
-        for(CSVRecord csvRecord : csvReviewParser) {
-
+            //creating reviewers
             String reviewerName = csvRecord.get("reviewer_name");
-            Individual individualReviewer = reviewer.createIndividual(BASE.concat(reviewerName));
-        }
+            Individual individualReviewer = reviewer.createIndividual(BASE.concat(URLEncoder.encode(reviewerName)));
+            individualReview.addProperty(hasReviewer, individualReviewer);
 
+            //creating journals/venues
+            String venueType = csvRecord.get("venue");
+
+            if(venueType.equals("J")) {
+                //creating journals
+                String journalName = csvRecord.get("journal");
+                Individual individualJournal = journal.createIndividual(BASE.concat(URLEncoder.encode(journalName)));
+
+                //creating editors
+                String editorName = csvRecord.get("editor");
+                Individual individualEditor = editor.createIndividual(BASE.concat(URLEncoder.encode(editorName)));
+                individualJournal.addProperty(hasEditor, individualEditor);
+
+            }
+            else if (venueType.equals("W")) {
+                //creating workshops
+                //String workshopName = csvRecord.get("");
+                //Individual individualWorkshop = workshop.createIndividual(BASE.concat(URLEncoder.encode(workshopName)));
+
+                //creating chairs
+                //String chairName = csvRecord.get("chair");
+                //Individual individualChair = chair.createIndividual(BASE.concat(URLEncoder.encode(chairName)));
+                //individualWorkshop.addProperty(hasChair, individualChair);
+            }
+            else if (venueType.equals("C")) {
+
+            }
+            else {
+
+            }
+        }
 
         FileOutputStream writerStream = new FileOutputStream(ABOX_DATA);
         model.write(writerStream, "N-TRIPLE");
