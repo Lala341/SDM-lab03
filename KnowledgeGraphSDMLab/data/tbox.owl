@@ -26,18 +26,6 @@
     
 
 
-    <!-- http://www.sdm.lab#hasarea -->
-
-
-    <owl:ObjectProperty rdf:about="http://www.sdm.lab#hasarea">
-        <rdfs:domain rdf:resource="http://www.sdm.lab#Venue"/>
-        <rdfs:range rdf:resource="http://www.sdm.lab#Area"/>
-        <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
-        <rdfs:label>:hasArea</rdfs:label>
-    </owl:ObjectProperty>
-    
-
-
     <!-- http://www.sdm.lab#hasauthor -->
 
 
@@ -98,14 +86,14 @@
     
 
 
-    <!-- http://www.sdm.lab#definedby -->
+    <!-- http://www.sdm.lab#hascitation -->
 
 
-    <owl:ObjectProperty rdf:about="http://www.sdm.lab#definedby">
-        <rdfs:domain rdf:resource="http://www.sdm.lab#Area"/>
-        <rdfs:range rdf:resource="http://www.sdm.lab#Keyword"/>
+    <owl:ObjectProperty rdf:about="http://www.sdm.lab#hascitation">
+        <rdfs:domain rdf:resource="http://www.sdm.lab#Paper"/>
+        <rdfs:range rdf:resource="http://www.sdm.lab#Paper"/>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
-        <rdfs:label>:definedBy</rdfs:label>
+        <rdfs:label>:hasCitation</rdfs:label>
     </owl:ObjectProperty>
     
 
@@ -118,6 +106,18 @@
         <rdfs:range rdf:resource="http://www.sdm.lab#Keyword"/>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>:hasKeywords</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sdm.lab#haspaperarea -->
+
+
+    <owl:ObjectProperty rdf:about="http://www.sdm.lab#haspaperarea">
+        <rdfs:domain rdf:resource="http://www.sdm.lab#Paper"/>
+        <rdfs:range rdf:resource="http://www.sdm.lab#Area"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
+        <rdfs:label>:hasPaperArea</rdfs:label>
     </owl:ObjectProperty>
     
 
@@ -142,6 +142,18 @@
         <rdfs:range rdf:resource="http://www.sdm.lab#Reviewer"/>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>:hasReviewer</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sdm.lab#hasvenuearea -->
+
+
+    <owl:ObjectProperty rdf:about="http://www.sdm.lab#hasvenuearea">
+        <rdfs:domain rdf:resource="http://www.sdm.lab#Venue"/>
+        <rdfs:range rdf:resource="http://www.sdm.lab#Area"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
+        <rdfs:label>:hasVenueArea</rdfs:label>
     </owl:ObjectProperty>
     
 
@@ -247,8 +259,45 @@
 
     <owl:DatatypeProperty rdf:about="http://www.sdm.lab#abstract">
         <rdfs:domain rdf:resource="http://www.sdm.lab#Paper"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>Abstract</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sdm.lab#acceptancedecision -->
+
+
+    <owl:DatatypeProperty rdf:about="http://www.sdm.lab#acceptancedecision">
+        <rdfs:domain rdf:resource="http://www.sdm.lab#Review"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
+        <rdfs:label>AcceptanceDecision</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sdm.lab#acceptancefinaldecision -->
+
+
+    <owl:DatatypeProperty rdf:about="http://www.sdm.lab#acceptancefinaldecision">
+        <rdfs:domain rdf:resource="http://www.sdm.lab#Submission"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
+        <rdfs:label>AcceptanceFinalDecision</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sdm.lab#affiliation -->
+
+
+    <owl:DatatypeProperty rdf:about="http://www.sdm.lab#affiliation">
+        <rdfs:domain rdf:resource="http://www.sdm.lab#Author"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
+        <rdfs:label>Affiliation</rdfs:label>
     </owl:DatatypeProperty>
     
 
@@ -258,63 +307,21 @@
 
     <owl:DatatypeProperty rdf:about="http://www.sdm.lab#areaname">
         <rdfs:domain rdf:resource="http://www.sdm.lab#Area"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>AreaName</rdfs:label>
     </owl:DatatypeProperty>
     
 
 
-    <!-- http://www.sdm.lab#authorid -->
+    <!-- http://www.sdm.lab#authororcid -->
 
 
-    <owl:DatatypeProperty rdf:about="http://www.sdm.lab#authorid">
+    <owl:DatatypeProperty rdf:about="http://www.sdm.lab#authororcid">
         <rdfs:domain rdf:resource="http://www.sdm.lab#Author"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
-        <rdfs:label>AuthorID</rdfs:label>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.sdm.lab#authorname -->
-
-
-    <owl:DatatypeProperty rdf:about="http://www.sdm.lab#authorname">
-        <rdfs:domain rdf:resource="http://www.sdm.lab#Author"/>
-        <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
-        <rdfs:label>AuthorName</rdfs:label>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.sdm.lab#chairname -->
-
-
-    <owl:DatatypeProperty rdf:about="http://www.sdm.lab#chairname">
-        <rdfs:domain rdf:resource="http://www.sdm.lab#Chair"/>
-        <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
-        <rdfs:label>ChairName</rdfs:label>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.sdm.lab#conferencename -->
-
-
-    <owl:DatatypeProperty rdf:about="http://www.sdm.lab#conferencename">
-        <rdfs:domain rdf:resource="http://www.sdm.lab#Conference"/>
-        <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
-        <rdfs:label>ConferenceName</rdfs:label>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.sdm.lab#decision -->
-
-
-    <owl:DatatypeProperty rdf:about="http://www.sdm.lab#decision">
-        <rdfs:domain rdf:resource="http://www.sdm.lab#Review"/>
-        <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
-        <rdfs:label>Decision</rdfs:label>
+        <rdfs:label>AuthorOrcid</rdfs:label>
     </owl:DatatypeProperty>
     
 
@@ -324,30 +331,21 @@
 
     <owl:DatatypeProperty rdf:about="http://www.sdm.lab#doi">
         <rdfs:domain rdf:resource="http://www.sdm.lab#Paper"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>DOI</rdfs:label>
     </owl:DatatypeProperty>
     
 
 
-    <!-- http://www.sdm.lab#editorname -->
+    <!-- http://www.sdm.lab#frequency -->
 
 
-    <owl:DatatypeProperty rdf:about="http://www.sdm.lab#editorname">
-        <rdfs:domain rdf:resource="http://www.sdm.lab#Editor"/>
+    <owl:DatatypeProperty rdf:about="http://www.sdm.lab#frequency">
+        <rdfs:domain rdf:resource="http://www.sdm.lab#Conference"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
-        <rdfs:label>EditorName</rdfs:label>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.sdm.lab#finaldecision -->
-
-
-    <owl:DatatypeProperty rdf:about="http://www.sdm.lab#finaldecision">
-        <rdfs:domain rdf:resource="http://www.sdm.lab#Submission"/>
-        <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
-        <rdfs:label>FinalDecision</rdfs:label>
+        <rdfs:label>Frequency</rdfs:label>
     </owl:DatatypeProperty>
     
 
@@ -357,30 +355,57 @@
 
     <owl:DatatypeProperty rdf:about="http://www.sdm.lab#indexnr">
         <rdfs:domain rdf:resource="http://www.sdm.lab#Proceeding"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>IndexNr</rdfs:label>
     </owl:DatatypeProperty>
     
 
 
-    <!-- http://www.sdm.lab#journalname -->
+    <!-- http://www.sdm.lab#journalimpactfactor -->
 
 
-    <owl:DatatypeProperty rdf:about="http://www.sdm.lab#journalname">
+    <owl:DatatypeProperty rdf:about="http://www.sdm.lab#journalimpactfactor">
         <rdfs:domain rdf:resource="http://www.sdm.lab#Journal"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
-        <rdfs:label>JournalName</rdfs:label>
+        <rdfs:label>JournalImpactFactor</rdfs:label>
     </owl:DatatypeProperty>
     
 
 
-    <!-- http://www.sdm.lab#reviewername -->
+    <!-- http://www.sdm.lab#managespanelscontent -->
 
 
-    <owl:DatatypeProperty rdf:about="http://www.sdm.lab#reviewername">
-        <rdfs:domain rdf:resource="http://www.sdm.lab#Reviewer"/>
+    <owl:DatatypeProperty rdf:about="http://www.sdm.lab#managespanelscontent">
+        <rdfs:domain rdf:resource="http://www.sdm.lab#Chair"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
-        <rdfs:label>ReviewerName</rdfs:label>
+        <rdfs:label>ManagesPanelsContent</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sdm.lab#managesproductionprocess -->
+
+
+    <owl:DatatypeProperty rdf:about="http://www.sdm.lab#managesproductionprocess">
+        <rdfs:domain rdf:resource="http://www.sdm.lab#Editor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
+        <rdfs:label>ManagesProductionProcess</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sdm.lab#personname -->
+
+
+    <owl:DatatypeProperty rdf:about="http://www.sdm.lab#personname">
+        <rdfs:domain rdf:resource="http://www.sdm.lab#Person"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
+        <rdfs:label>PersonName</rdfs:label>
     </owl:DatatypeProperty>
     
 
@@ -390,6 +415,7 @@
 
     <owl:DatatypeProperty rdf:about="http://www.sdm.lab#reviewtext">
         <rdfs:domain rdf:resource="http://www.sdm.lab#Review"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>ReviewText</rdfs:label>
     </owl:DatatypeProperty>
@@ -401,8 +427,21 @@
 
     <owl:DatatypeProperty rdf:about="http://www.sdm.lab#title">
         <rdfs:domain rdf:resource="http://www.sdm.lab#Paper"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>Title</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sdm.lab#venuename -->
+
+
+    <owl:DatatypeProperty rdf:about="http://www.sdm.lab#venuename">
+        <rdfs:domain rdf:resource="http://www.sdm.lab#Venue"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
+        <rdfs:label>VenueName</rdfs:label>
     </owl:DatatypeProperty>
     
 
@@ -412,6 +451,7 @@
 
     <owl:DatatypeProperty rdf:about="http://www.sdm.lab#volumenr">
         <rdfs:domain rdf:resource="http://www.sdm.lab#Volume"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>VolumeNr</rdfs:label>
     </owl:DatatypeProperty>
@@ -423,6 +463,7 @@
 
     <owl:DatatypeProperty rdf:about="http://www.sdm.lab#word">
         <rdfs:domain rdf:resource="http://www.sdm.lab#Keyword"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>Word</rdfs:label>
     </owl:DatatypeProperty>
@@ -434,8 +475,21 @@
 
     <owl:DatatypeProperty rdf:about="http://www.sdm.lab#yearpublished">
         <rdfs:domain rdf:resource="http://www.sdm.lab#Publication"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>YearPublished</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sdm.lab#yearsreviewerexperience -->
+
+
+    <owl:DatatypeProperty rdf:about="http://www.sdm.lab#yearsreviewerexperience">
+        <rdfs:domain rdf:resource="http://www.sdm.lab#Reviewer"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
+        <rdfs:label>YearsReviewerExperience</rdfs:label>
     </owl:DatatypeProperty>
     
 
