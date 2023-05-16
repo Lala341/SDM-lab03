@@ -11,7 +11,9 @@ import org.apache.jena.rdf.model.Property;
 
 import java.io.*;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class ABOX {
 
@@ -91,7 +93,7 @@ public class ABOX {
         DatatypeProperty frequency = ontModel.getDatatypeProperty(BASE.concat("frequency"));
         DatatypeProperty journalimpactfactor = ontModel.getDatatypeProperty(BASE.concat("journalimpactfactor"));
 
-
+        List<String> citationsList = new ArrayList<>();
 
         BufferedReader csvReader = new BufferedReader(new FileReader(CSV_DATA_ARTICLE));
         CSVParser csvParser = CSVFormat.DEFAULT.withDelimiter(',').withHeader().parse(csvReader);
@@ -117,11 +119,14 @@ public class ABOX {
                 paperClass = poster;
             }
 
-            Individual individualPaper = paperClass.createIndividual(BASE.concat(URLEncoder.encode(paperTitle)));
+            Individual individualPaper = paperClass.createIndividual(BASE.concat(URLEncoder.encode(csvRecord.get("DOI"))));
 
             individualPaper.addLiteral(title, model.createTypedLiteral(paperTitle));
             individualPaper.addLiteral(DOI, model.createTypedLiteral(csvRecord.get("DOI"), XSDDatatype.XSDstring));
             individualPaper.addLiteral(paperAbstract, model.createTypedLiteral(csvRecord.get("Abstract")));
+
+            //adding citations
+            citationsList.add(csvRecord.get("DOI")+"|"+csvRecord.get("Citation_DOI"));
 
             //creating authors
             String authorName = csvRecord.get("AuthorName");
@@ -147,25 +152,26 @@ public class ABOX {
 
             }
 
+            //creating areas
             String areaLabel = csvRecord.get("Area");
-            Individual individualArea = area.createIndividual(BASE.concat(URLEncoder.encode(areaLabel)));
+            Individual individualArea = area.createIndividual(BASE.concat(URLEncoder.encode("Area_" + areaLabel)));
             individualArea.addLiteral(areaName, model.createTypedLiteral(areaLabel));
             individualPaper.addProperty(hasPaperArea, individualArea);
 
             //creating submissions
-            String submissionName = "Submission:" + paperTitle;
+            String submissionName = "Submission_" + paperTitle;
             Individual individualSubmission = submission.createIndividual(BASE.concat(URLEncoder.encode(submissionName)));
             individualSubmission.addLiteral(finalDecision, model.createTypedLiteral(csvRecord.get("FinalDecision"),XSDDatatype.XSDboolean));
             individualPaper.addProperty(isSubmitted, individualSubmission);
 
             //creating reviews
-            String reviewName1 = "Review1:" + paperTitle;
+            String reviewName1 = "Review1_" + paperTitle;
             Individual individualReview1 = review.createIndividual(BASE.concat(URLEncoder.encode(reviewName1)));
             individualReview1.addLiteral(reviewText, model.createTypedLiteral(csvRecord.get("ReviewText1")));
             individualReview1.addLiteral(reviewDecision, model.createTypedLiteral(csvRecord.get("ReviewDecision1"),XSDDatatype.XSDboolean));
             individualSubmission.addProperty(hasReview, individualReview1);
 
-            String reviewName2 = "Review2:" + paperTitle;
+            String reviewName2 = "Review2_" + paperTitle;
             Individual individualReview2 = review.createIndividual(BASE.concat(URLEncoder.encode(reviewName2)));
             individualReview1.addLiteral(reviewText, model.createTypedLiteral(csvRecord.get("ReviewText2")));
             individualReview1.addLiteral(reviewDecision, model.createTypedLiteral(csvRecord.get("ReviewDecision2"),XSDDatatype.XSDboolean));
@@ -288,6 +294,13 @@ public class ABOX {
             }
         }
 
+        for (String element : citationsList) {
+            System.out.println(element);
+            String[] paperList = element.split("\\|", -1);
+            Individual paper1 = ontModel.getIndividual(BASE.concat(paperList[0]));
+            Individual paper2 = ontModel.getIndividual(BASE.concat(paperList[1]));
+            paper1.addProperty(hasCitation, paper2);
+        }
 
         FileOutputStream writerStream = new FileOutputStream(ABOX_DATA);
         model.write(writerStream, "N-TRIPLE");
