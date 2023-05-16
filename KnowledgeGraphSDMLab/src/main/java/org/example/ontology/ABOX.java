@@ -288,6 +288,7 @@ public class ABOX {
             }
         }
 
+
         FileOutputStream writerStream = new FileOutputStream(ABOX_DATA);
         model.write(writerStream, "N-TRIPLE");
         writerStream.close();
