@@ -5,7 +5,9 @@ PREFIX owl: <http://www.w3.org/2002/07/owl#>
 
 
 
-SELECT ?author where { ?author rdf:type sdm:Author}
+SELECT ?author where { 
+    ?author rdf:type sdm:Author
+}
 
 
 
@@ -15,7 +17,7 @@ SELECT ?property where {
 
 
 
-select ?property where { 
+SELECT ?property where { 
     {?property rdfs:domain sdm:Conference} UNION {?property rdfs:domain sdm:Journal}
 } 
 

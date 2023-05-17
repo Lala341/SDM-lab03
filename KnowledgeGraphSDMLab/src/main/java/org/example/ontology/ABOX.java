@@ -65,8 +65,6 @@ public class ABOX {
         OntProperty isSubmitted = ontModel.getOntProperty(BASE.concat("issubmitted"));
         OntProperty isPublished = ontModel.getOntProperty(BASE.concat("ispublished"));
         OntProperty submittedTo = ontModel.getOntProperty(BASE.concat("submittedto"));
-        OntProperty belongsToVolume = ontModel.getOntProperty(BASE.concat("belongstovolume"));
-        OntProperty belongsToProceeding = ontModel.getOntProperty(BASE.concat("belongstoproceeding"));
         OntProperty isPartOf = ontModel.getOntProperty(BASE.concat("ispartof"));
         OntProperty partOf = ontModel.getOntProperty(BASE.concat("partof"));
         OntProperty hasCitation = ontModel.getOntProperty(BASE.concat("hascitation"));
@@ -173,9 +171,9 @@ public class ABOX {
 
             String reviewName2 = "Review2_" + paperTitle;
             Individual individualReview2 = review.createIndividual(BASE.concat(URLEncoder.encode(reviewName2)));
-            individualReview1.addLiteral(reviewText, model.createTypedLiteral(csvRecord.get("ReviewText2")));
-            individualReview1.addLiteral(reviewDecision, model.createTypedLiteral(csvRecord.get("ReviewDecision2"),XSDDatatype.XSDboolean));
-            individualSubmission.addProperty(hasReview, individualReview1);
+            individualReview2.addLiteral(reviewText, model.createTypedLiteral(csvRecord.get("ReviewText2")));
+            individualReview2.addLiteral(reviewDecision, model.createTypedLiteral(csvRecord.get("ReviewDecision2"),XSDDatatype.XSDboolean));
+            individualSubmission.addProperty(hasReview, individualReview2);
 
             //creating reviewers
             String reviewerName1 = csvRecord.get("ReviewerName1");
@@ -223,7 +221,6 @@ public class ABOX {
                     String volumeLabel = csvRecord.get("VolumeNr");
                     Individual individualVolume = volume.createIndividual(BASE.concat(URLEncoder.encode(volumeLabel)));
                     individualVolume.addLiteral(volumeNr, model.createTypedLiteral(volumeLabel, XSDDatatype.XSDstring));
-                    individualPublication.addProperty(belongsToVolume, individualVolume);
                     individualVolume.addProperty(partOf, individualJournal);
                 }
 
@@ -273,7 +270,6 @@ public class ABOX {
                     String proceedingLabel = csvRecord.get("IndexNr");
                     Individual individualProceeding = proceeding.createIndividual(BASE.concat(URLEncoder.encode(proceedingLabel)));
                     individualProceeding.addLiteral(indexNr, model.createTypedLiteral(proceedingLabel,XSDDatatype.XSDstring ));
-                    individualPublication.addProperty(belongsToProceeding, individualProceeding);
                     individualProceeding.addProperty(isPartOf, individualConference);
                 }
 

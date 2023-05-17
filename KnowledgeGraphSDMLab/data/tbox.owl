@@ -62,30 +62,6 @@
     
 
 
-    <!-- http://www.sdm.lab#belongstoproceeding -->
-
-
-    <owl:ObjectProperty rdf:about="http://www.sdm.lab#belongstoproceeding">
-        <rdfs:domain rdf:resource="http://www.sdm.lab#Publication"/>
-        <rdfs:range rdf:resource="http://www.sdm.lab#Proceeding"/>
-        <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
-        <rdfs:label>:belongsToProceeding</rdfs:label>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://www.sdm.lab#belongstovolume -->
-
-
-    <owl:ObjectProperty rdf:about="http://www.sdm.lab#belongstovolume">
-        <rdfs:domain rdf:resource="http://www.sdm.lab#Publication"/>
-        <rdfs:range rdf:resource="http://www.sdm.lab#Volume"/>
-        <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
-        <rdfs:label>:belongsToVolume</rdfs:label>
-    </owl:ObjectProperty>
-    
-
-
     <!-- http://www.sdm.lab#hascitation -->
 
 
@@ -170,6 +146,18 @@
     
 
 
+    <!-- http://www.sdm.lab#ispublished -->
+
+
+    <owl:ObjectProperty rdf:about="http://www.sdm.lab#ispublished">
+        <rdfs:domain rdf:resource="http://www.sdm.lab#Submission"/>
+        <rdfs:range rdf:resource="http://www.sdm.lab#Publication"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
+        <rdfs:label>:isPublished</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.sdm.lab#issubmitted -->
 
 
@@ -178,6 +166,18 @@
         <rdfs:range rdf:resource="http://www.sdm.lab#Submission"/>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>:isSubmitted</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sdm.lab#oversees -->
+
+
+    <owl:ObjectProperty rdf:about="http://www.sdm.lab#oversees">
+        <rdfs:domain rdf:resource="http://www.sdm.lab#Editor"/>
+        <rdfs:range rdf:resource="http://www.sdm.lab#Submission"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
+        <rdfs:label>:oversees</rdfs:label>
     </owl:ObjectProperty>
     
 
@@ -214,30 +214,6 @@
         <rdfs:range rdf:resource="http://www.sdm.lab#Submission"/>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>:supervises</rdfs:label>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://www.sdm.lab/ispublished# -->
-
-
-    <owl:ObjectProperty rdf:about="http://www.sdm.lab#ispublished">
-        <rdfs:domain rdf:resource="http://www.sdm.lab#Submission"/>
-        <rdfs:range rdf:resource="http://www.sdm.lab#Publication"/>
-        <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
-        <rdfs:label>:isPublished</rdfs:label>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://www.sdm.lab/oversees# -->
-
-
-    <owl:ObjectProperty rdf:about="http://www.sdm.lab#oversees">
-        <rdfs:domain rdf:resource="http://www.sdm.lab#Editor"/>
-        <rdfs:range rdf:resource="http://www.sdm.lab#Submission"/>
-        <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
-        <rdfs:label>:oversees</rdfs:label>
     </owl:ObjectProperty>
     
 
@@ -532,6 +508,13 @@
 
     <owl:Class rdf:about="http://www.sdm.lab#Chair">
         <rdfs:subClassOf rdf:resource="http://www.sdm.lab#Person"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.sdm.lab#supervises"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.sdm.lab#Submission"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>Chair</rdfs:label>
     </owl:Class>
@@ -543,6 +526,13 @@
 
     <owl:Class rdf:about="http://www.sdm.lab#Conference">
         <rdfs:subClassOf rdf:resource="http://www.sdm.lab#Venue"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.sdm.lab#haschair"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.sdm.lab#Chair"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>Conference</rdfs:label>
     </owl:Class>
@@ -565,6 +555,13 @@
 
     <owl:Class rdf:about="http://www.sdm.lab#Editor">
         <rdfs:subClassOf rdf:resource="http://www.sdm.lab#Person"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.sdm.lab#oversees"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.sdm.lab#Submission"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>Editor</rdfs:label>
     </owl:Class>
@@ -598,6 +595,13 @@
 
     <owl:Class rdf:about="http://www.sdm.lab#Journal">
         <rdfs:subClassOf rdf:resource="http://www.sdm.lab#Venue"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.sdm.lab#haseditor"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.sdm.lab#Editor"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>Journal</rdfs:label>
     </owl:Class>
@@ -608,6 +612,41 @@
 
 
     <owl:Class rdf:about="http://www.sdm.lab#Paper">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.sdm.lab#hasauthor"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.sdm.lab#Author"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.sdm.lab#hascitation"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.sdm.lab#Paper"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.sdm.lab#haskeywords"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.sdm.lab#Keyword"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.sdm.lab#haspaperarea"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.sdm.lab#Area"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.sdm.lab#issubmitted"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.sdm.lab#Submission"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>Paper</rdfs:label>
     </owl:Class>
@@ -649,6 +688,13 @@
 
 
     <owl:Class rdf:about="http://www.sdm.lab#Review">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.sdm.lab#hasreviewer"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.sdm.lab#Reviewer"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>Review</rdfs:label>
     </owl:Class>
@@ -681,6 +727,13 @@
 
 
     <owl:Class rdf:about="http://www.sdm.lab#Venue">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.sdm.lab#hasvenuearea"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.sdm.lab#Area"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>Venue</rdfs:label>
     </owl:Class>
@@ -712,6 +765,14 @@
 
 
     <owl:Class rdf:about="http://www.sdm.lab#Proceeding">
+        <rdfs:subClassOf rdf:resource="http://www.sdm.lab#Publication"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.sdm.lab#ispartof"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.sdm.lab#Conference"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>Proceeding</rdfs:label>
     </owl:Class>
@@ -744,6 +805,27 @@
 
 
     <owl:Class rdf:about="http://www.sdm.lab#Submission">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.sdm.lab#hasreview"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.sdm.lab#Review"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.sdm.lab#ispublished"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.sdm.lab#Publication"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.sdm.lab#submittedto"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.sdm.lab#Venue"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>Submission</rdfs:label>
     </owl:Class>
@@ -754,6 +836,14 @@
 
 
     <owl:Class rdf:about="http://www.sdm.lab#Volume">
+        <rdfs:subClassOf rdf:resource="http://www.sdm.lab#Publication"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.sdm.lab#partof"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.sdm.lab#Journal"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.sdm.lab"/>
         <rdfs:label>Volume</rdfs:label>
     </owl:Class>
