@@ -1,0 +1,39 @@
+PREFIX sdm: <http://www.sdm.lab#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+
+
+SELECT ?author where { 
+    ?author rdf:type sdm:Author
+}
+
+
+
+SELECT ?property where { 
+	?property rdfs:domain sdm:Author
+} 
+
+
+
+SELECT ?property where { 
+    {?property rdfs:domain sdm:Conference} UNION {?property rdfs:domain sdm:Journal}
+} 
+
+
+
+SELECT ?author (GROUP_CONCAT(?paperName; SEPARATOR=", ") AS ?paperNames) ?area where { 
+
+?paper rdf:type sdm:Paper;
+    sdm:issubmitted ?submition;
+    sdm:hasauthor ?author ;
+    sdm:title ?paperName .
+?submition rdf:type sdm:Submission;
+    sdm:submittedto ?venue.
+?venue rdf:type sdm:Conference ;
+    sdm:hasvenuearea ?area .
+?area rdf:type sdm:Area;
+    sdm:areaname "data management" 
+}
+GROUP BY ?author ?area
