@@ -101,6 +101,7 @@ public class ABOX {
             //creating papers
             String paperTitle = csvRecord.get("Title");
             String paperType = csvRecord.get("PaperType");
+            String paperDOI = csvRecord.get("DOI");
 
             OntClass paperClass;
 
@@ -193,14 +194,7 @@ public class ABOX {
             individualReviewer2.addLiteral(reviewerexperience, model.createTypedLiteral(reviewerExperience2,XSDDatatype.XSDinteger)); //e
             individualReview2.addProperty(hasReviewer, individualReviewer2);
 
-            //creating publication
-            String publicationLabel = "Publication:" + paperTitle;
-            Individual individualPublication = publication.createIndividual(BASE.concat(URLEncoder.encode(publicationLabel)));
-            individualPublication.addLiteral(yearPublished, model.createTypedLiteral(csvRecord.get("YearPublished"),XSDDatatype.XSDinteger));
-            if(csvRecord.get("FinalDecision").equals("A"))
-            {
-                individualSubmission.addProperty(isPublished, individualPublication);
-            }
+
 
             //creating journals/conferences
             String venueType = csvRecord.get("VenueType");
@@ -217,11 +211,14 @@ public class ABOX {
 
 
                 //creating volume
-                if (individualPublication!= null) {
+                if (csvRecord.get("FinalDecision").equals("True")) {
                     String volumeLabel = csvRecord.get("VolumeNr");
                     Individual individualVolume = volume.createIndividual(BASE.concat(URLEncoder.encode(volumeLabel)));
                     individualVolume.addLiteral(volumeNr, model.createTypedLiteral(volumeLabel, XSDDatatype.XSDstring));
+                    individualVolume.addLiteral(yearPublished, model.createTypedLiteral(csvRecord.get("YearPublished"),XSDDatatype.XSDinteger));
+
                     individualVolume.addProperty(partOf, individualJournal);
+                    individualSubmission.addProperty(isPublished, individualVolume);
                 }
 
                 //creating editor
@@ -266,11 +263,15 @@ public class ABOX {
 
 
                 //creating proceeding
-                if (individualPublication!= null) {
+                if (csvRecord.get("FinalDecision").equals("True")) {
                     String proceedingLabel = csvRecord.get("IndexNr");
                     Individual individualProceeding = proceeding.createIndividual(BASE.concat(URLEncoder.encode(proceedingLabel)));
                     individualProceeding.addLiteral(indexNr, model.createTypedLiteral(proceedingLabel,XSDDatatype.XSDstring ));
+                    individualProceeding.addLiteral(yearPublished, model.createTypedLiteral(csvRecord.get("YearPublished"),XSDDatatype.XSDinteger));
+
                     individualProceeding.addProperty(isPartOf, individualConference);
+                    individualSubmission.addProperty(isPublished, individualProceeding);
+
                 }
 
                 //creating chair
@@ -291,7 +292,6 @@ public class ABOX {
         }
 
         for (String element : citationsList) {
-            System.out.println(element);
             String[] paperList = element.split("\\|", -1);
             Individual paper1 = ontModel.getIndividual(BASE.concat(paperList[0]));
             Individual paper2 = ontModel.getIndividual(BASE.concat(paperList[1]));
@@ -302,4 +302,6 @@ public class ABOX {
         model.write(writerStream, "N-TRIPLE");
         writerStream.close();
     }
+
+    
 }
